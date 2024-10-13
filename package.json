@@ -45,13 +45,13 @@
   },
   "devDependencies": {
     "@types/chai": "^4.3.16",
-    "@types/mocha": "^10.0.7",
+    "@types/mocha": "^10.0.9",
     "@types/node": "^22.7.5",
     "@types/vscode": "^1.85.0",
     "@typescript-eslint/eslint-plugin": "^7.14.1",
     "chai": "^4.4.1",
     "eslint": "^8.57.0",
-    "mocha": "^10.5.2",
+    "mocha": "^10.7.3",
     "typescript": "^5.6.3",
     "vscode-extension-tester": "^8.8.0"
   }
