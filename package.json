@@ -39,18 +39,20 @@
   "scripts": {
     "vscode:prepublish": "npm run compile",
     "compile": "tsc -p ./ && npm run lint",
-    "lint": "eslint src --ext .ts",
+    "lint": "eslint src",
     "watch": "tsc -watch -p ./",
     "ui-test": "extest setup-and-run './out/ui-test/*.test.js' --code_version max --code_settings settings.json --extensions_dir .test-extensions"
   },
   "devDependencies": {
+    "@stylistic/eslint-plugin": "^2.9.0",
     "@types/chai": "^4.3.16",
     "@types/mocha": "^10.0.9",
     "@types/node": "^22.7.5",
     "@types/vscode": "^1.85.0",
-    "@typescript-eslint/eslint-plugin": "^7.14.1",
+    "@typescript-eslint/eslint-plugin": "^8.10.0",
     "chai": "^4.4.1",
-    "eslint": "^8.57.0",
+    "eslint": "^9.13.0",
+    "eslint-define-config": "^2.1.0",
     "mocha": "^10.7.3",
     "typescript": "^5.6.3",
     "vscode-extension-tester": "^8.8.0"
