@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { BottomBarPanel, MarkerType, OutputView, ProblemsView, TerminalView, VSBrowser } from 'vscode-extension-tester';
+import { BottomBarPanel, EditorView, MarkerType, OutputView, ProblemsView, TerminalView, VSBrowser } from 'vscode-extension-tester';
 import * as path from 'path';
 import { expect } from 'chai';
 
@@ -63,6 +63,10 @@ describe('Bottom Bar Example Tests', function () {
 			await view.getDriver().wait(async function () {
 				return await problemsExist(view);
 			}, 15000);
+		});
+
+		after(async function () {
+			await new EditorView().closeAllEditors();
 		});
 
 		// These tests use getAllVisibleMarkers() and are unreliable and should not be included.
@@ -136,8 +140,7 @@ describe('Bottom Bar Example Tests', function () {
 	});
 
 	// lets test the output view now
-	// TODO: Fix
-	describe.skip('Output View', function () {
+	describe('Output View', function () {
 		let view: OutputView;
 
 		before(async function () {
@@ -156,28 +159,29 @@ describe('Bottom Bar Example Tests', function () {
 		});
 
 		it('Clear the output channel', async function () {
+			const delimiter = process.platform === 'win32' ? '\r\n' : '\n';
 			await view.clearText();
 			const text = await view.getText();
 
 			// now the log is technically empty, it just contains a newline character
-			expect(text).equals('\n');
+			expect(text).equals(delimiter);
 		});
 	});
 
-	// TODO: Fix
-	describe.skip('Terminal View', function () {
+	describe('Terminal View', function () {
 		let view: TerminalView;
 
 		before(async function () {
 			view = await bottomBar.openTerminalView();
 		});
 
-		it.skip('Execute a command', async function () {
-			await view.executeCommand('echo "hello world\\!"', 2000);
+		it('Execute a command', async function () {
+			const delimiter = process.platform === 'win32' ? '\r\n' : '\n';
+			await view.executeCommand('echo "hello world"', 2_000);
 
 			// now there should be a line saying 'hello world!' in the terminal
 			const text = await view.getText();
-			const textFound = text.split('\n').some((line) => line === 'hello world!');
+			const textFound = text.split(delimiter).some((line) => line === 'hello world');
 
 			expect(textFound).is.true;
 		});

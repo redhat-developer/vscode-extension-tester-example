@@ -18,8 +18,7 @@
 import { expect } from 'chai';
 import { CheckboxSetting, SettingsEditor, Workbench } from 'vscode-extension-tester';
 
-// TODO: Fix
-describe.skip('Settings Editor sample tests', () => {
+describe('Settings Editor sample tests', () => {
 	let settings: SettingsEditor;
 
 	before(async () => {
