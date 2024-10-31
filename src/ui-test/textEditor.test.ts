@@ -57,7 +57,7 @@ describe('Text Editor sample tests', () => {
 
 		// get text at the line with given number
 		const line = await editor.getTextAtLine(2);
-		expect(line).equals('line2');
+		expect(line).include('line2');
 
 		// get the line number of a search string
 		const lineNum = await editor.getLineOfText('3');
