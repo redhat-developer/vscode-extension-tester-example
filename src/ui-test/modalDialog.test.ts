@@ -16,17 +16,19 @@
  */
 
 import { expect } from 'chai';
-import { EditorView, ModalDialog, TextEditor, Workbench } from 'vscode-extension-tester';
+import { EditorView, InputBox, ModalDialog, TextEditor, Workbench } from 'vscode-extension-tester';
 
 // Example of handling a modal dialog
-// TODO: Fix
-describe.skip('Sample Modal Dialog Tests', () => {
+describe('Sample Modal Dialog Tests', () => {
 	let dialog: ModalDialog;
 
 	before(async () => {
 		// we need to open some modal dialog first, so lets try to close an unsaved file
 		// create a new file
 		await new Workbench().executeCommand('create new file');
+		const input = await InputBox.create();
+		await input.selectQuickPick('Text File');
+		await input.getDriver().sleep(500);
 		// make some changes
 		const editor = new TextEditor();
 		await editor.typeTextAt(1, 1, 'text');

@@ -2,5 +2,7 @@
   "typescript.updateImportsOnFileMove.enabled": "always",
   "workbench.editor.enablePreview": true,
   "git.autoRepositoryDetection": false,
-  "terminal.integrated.sendKeybindingsToShell": true
+  "terminal.integrated.sendKeybindingsToShell": true,
+  "workbench.remoteIndicator.showExtensionRecommendations": false,
+  "extensions.ignoreRecommendations": true
 }
