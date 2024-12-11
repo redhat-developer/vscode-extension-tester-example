@@ -44,7 +44,7 @@
     "ui-test": "extest setup-and-run './out/ui-test/*.test.js' --code_version max --code_settings settings.json --extensions_dir .test-extensions"
   },
   "devDependencies": {
-    "@stylistic/eslint-plugin": "^2.12.0",
+    "@stylistic/eslint-plugin": "^2.12.1",
     "@types/chai": "^4.3.16",
     "@types/mocha": "^10.0.10",
     "@types/node": "^22.10.1",
