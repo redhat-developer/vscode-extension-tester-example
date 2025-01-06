@@ -16,7 +16,7 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        os: [ubuntu-latest, macos-latest, windows-latest]
+        os: [ubuntu-22.04, macos-latest, windows-latest]
       fail-fast: false
     env:
       TEST_RESOURCES: test-resources
@@ -37,11 +37,11 @@ jobs:
         run: npm run compile
 
       - name: UI test (macOS, windows)
-        if: matrix.os != 'ubuntu-latest'
+        if: matrix.os != 'ubuntu-22.04'
         run: npm run ui-test
 
       - name: UI test (linux)
-        if: matrix.os == 'ubuntu-latest'
+        if: matrix.os == 'ubuntu-22.04'
         run: xvfb-run --auto-servernum --server-args='-screen 0 1920x1080x24' npm run ui-test
 
       - name: Store UI test logs
@@ -53,14 +53,14 @@ jobs:
 
       - name: Store UI Test screenshots
         uses: actions/upload-artifact@v4
-        if: failure() || cancelled()
+        if: always()
         with:
           name: screenshots-${{ matrix.os }}
           path: test-resources/screenshots/*.png
 
   check:
     if: always()
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     name: 🚦 Status Check
     needs: [main]
     steps:

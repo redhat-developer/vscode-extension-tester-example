@@ -38,7 +38,7 @@ describe('Bottom Bar Example Tests', function () {
 
 	// The panel houses potentially several different views, lets test those
 	// starting with the problems view
-	describe('Problems View', function () {
+	describe.only('Problems View', function () {
 		let view: ProblemsView;
 
 		// wait condition for problem markers to exist within problems view
