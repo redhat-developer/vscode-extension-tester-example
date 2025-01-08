@@ -56,8 +56,12 @@ describe('Bottom Bar Example Tests', function () {
 			// firstly, open the problems view
 			view = await bottomBar.openProblemsView();
 
+			await VSBrowser.instance.takeScreenshot("before");
+
 			// now we need some problems, lets open a file that contains some
 			await VSBrowser.instance.openResources(path.join('src', 'ui-test', 'resources', 'problems.ts'));
+
+			await VSBrowser.instance.takeScreenshot("after");
 
 			// wait for the editor to parse the file and display the problem markers
 			await view.getDriver().wait(async function () {
