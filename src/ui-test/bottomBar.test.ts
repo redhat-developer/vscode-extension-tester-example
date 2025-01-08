@@ -15,9 +15,44 @@
  * limitations under the License.
  */
 
-import { BottomBarPanel, EditorView, MarkerType, OutputView, ProblemsView, TerminalView, VSBrowser } from 'vscode-extension-tester';
+import { BottomBarPanel, EditorView, InputBox, MarkerType, OutputView, ProblemsView, TerminalView, TitleBar, VSBrowser } from 'vscode-extension-tester';
 import * as path from 'path';
 import { expect } from 'chai';
+
+/**
+ * Opens a file in the editor using the "File > Open File..." menu.
+ * @param file - The relative path of the file to open.
+ * @param workspaceDir - The base directory of the workspace.
+ */
+async function openEditor(file: string, workspaceDir: string): Promise<void> {
+    try {
+        // Access the title bar
+        const titleBar = new TitleBar();
+        const item = await titleBar.getItem('File');
+        if (!item) {
+            throw new Error("Unable to find 'File' menu item.");
+        }
+
+        // Open the "File" menu
+        const fileMenu = await item.select();
+        const openItem = await fileMenu?.getItem("Open File...");
+        if (!openItem) {
+            throw new Error("Unable to find 'Open File...' menu item.");
+        }
+
+        // Select "Open File..."
+        await openItem.select();
+
+        // Set file path in input box and confirm
+        const input = await InputBox.create();
+        await input.setText(`${workspaceDir}/${file}`);
+        await input.confirm();
+    } catch (error) {
+        console.error('Error opening editor:', error);
+        throw error;
+    }
+}
+
 
 // Sample tests using the Bottom Bar, the panel that houses the terminal, output, problems, etc.
 describe('Bottom Bar Example Tests', function () {
@@ -59,7 +94,9 @@ describe('Bottom Bar Example Tests', function () {
 			await VSBrowser.instance.takeScreenshot("before");
 
 			// now we need some problems, lets open a file that contains some
-			await VSBrowser.instance.openResources(path.join('src', 'ui-test', 'resources', 'problems.ts'));
+			// await VSBrowser.instance.openResources(path.join('src', 'ui-test', 'resources', 'problems.ts'));
+			await openEditor(path.join('src', 'ui-test', 'resources', 'problems.ts'), path.resolve(__dirname, '..', '..'));
+
 
 			await VSBrowser.instance.takeScreenshot("after");
 
