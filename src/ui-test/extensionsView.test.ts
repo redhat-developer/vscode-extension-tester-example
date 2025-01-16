@@ -17,7 +17,7 @@
 
 import { expect } from 'chai';
 import { ActivityBar, ExtensionsViewItem, ExtensionsViewSection } from 'vscode-extension-tester';
-import pjson from '../../package.json';
+import pjson from '../../package.json' with { type: 'json' };
 
 // sample test code on how to look for an extension
 describe('Example extension view tests', () => {

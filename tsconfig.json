@@ -1,12 +1,14 @@
 {
   "compilerOptions": {
-    "module": "Node16",
+    "module": "NodeNext",
+    "moduleResolution": "NodeNext",
     "target": "ES2022",
     "outDir": "out",
     "sourceMap": true,
     "strict": true,
     "rootDir": "src",
     "resolveJsonModule": true,
+    "allowSyntheticDefaultImports": true,
     "skipLibCheck": true
   },
   "exclude": ["node_modules", ".vscode-test", "test-resources", "src/ui-test/resources/**", ".test-extensions"],
