@@ -47,7 +47,7 @@
     "@stylistic/eslint-plugin": "^4.2.0",
     "@types/chai": "^4.3.16",
     "@types/mocha": "^10.0.10",
-    "@types/node": "^22.13.6",
+    "@types/node": "^22.13.9",
     "@types/vscode": "^1.85.0",
     "@typescript-eslint/eslint-plugin": "^8.26.0",
     "chai": "^4.4.1",
