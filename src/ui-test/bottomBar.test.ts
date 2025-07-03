@@ -57,7 +57,10 @@ describe('Bottom Bar Example Tests', function () {
 			view = await bottomBar.openProblemsView();
 
 			// now we need some problems, lets open a file that contains some
-			await VSBrowser.instance.openResources(path.join('src', 'ui-test', 'resources', 'problems.ts'));
+			await VSBrowser.instance.openResources(path.join('src', 'ui-test', 'resources', 'problems.ts'), async () => {
+				await VSBrowser.instance.driver.sleep(3_000); // give vscode workbench some more time to load properly
+				// this can be used for some dymamic waiting such for example wait until editor with given title is opened and so on
+			});
 
 			// wait for the editor to parse the file and display the problem markers
 			await view.getDriver().wait(async function () {
@@ -147,9 +150,11 @@ describe('Bottom Bar Example Tests', function () {
 			this.timeout(30_000);
 			// open the output view first
 			view = await bottomBar.openOutputView();
+			await view.getDriver().sleep(1_000); // give some time to render (can be done aslo dynamically using 'drivar.wait(...)')
 
 			// select a channel that actually has some text in it
 			await view.selectChannel('Main');
+			await view.getDriver().sleep(1_000); // give some time to render (can be done aslo dynamically using 'drivar.wait(...)')
 		});
 
 		// check if there is text in the output
