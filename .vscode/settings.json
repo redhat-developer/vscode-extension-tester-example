@@ -1,0 +1,7 @@
+{
+    "extesterRunner.rootFolder": "src",
+    "extesterRunner.additionalArgs": [
+        "--code_settings settings.json",
+        "--extensions_dir .test-extensions"
+    ]
+}
