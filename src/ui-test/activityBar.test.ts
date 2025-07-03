@@ -59,9 +59,11 @@ describe('Activity Bar Example Tests', () => {
 		expect(await view?.isDisplayed()).is.true;
 	});
 
+	// NOTE: This will be working only for testing with VS Code 1.101+
+
 	// Using the global actions controls (the ones on the bottom of the activity bar)
 	// This test uses context menus, which are not available on mac, so we skip it there
-	(process.platform === 'darwin' ? it.skip : it)('Manipulate the Global Actions', async () => {
+	it('Manipulate the Global Actions', async () => {
 		// get a global action control analogically to view controls
 		const manage = await activityBar.getGlobalAction('Manage');
 

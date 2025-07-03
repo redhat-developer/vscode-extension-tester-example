@@ -26,7 +26,10 @@ describe('Example status bar tests', () => {
 		this.timeout(15_000);
 		statusBar = new StatusBar();
 		// most basic functions of status bar are only available when a file is opened
-		await VSBrowser.instance.openResources(path.join('src', 'ui-test', 'resources', 'problems.ts'));
+		await VSBrowser.instance.openResources(path.join('src', 'ui-test', 'resources', 'problems.ts'), async () => {
+				await VSBrowser.instance.driver.sleep(3_000); // give vscode workbench some more time to load properly
+				// this can be used for some dymamic waiting such for example wait until editor with given title is opened and so on
+			});
 	});
 
 	it('Generic items', async () => {

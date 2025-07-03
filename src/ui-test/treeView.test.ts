@@ -28,7 +28,10 @@ describe('Example tree view tests', () => {
 		this.timeout(15_000);
 		// we will be looking at the explorer view
 		// first we need to open a folder to get some items into the view
-		await VSBrowser.instance.openResources(path.join('src', 'ui-test', 'resources', 'test'));
+		await VSBrowser.instance.openResources(path.join('src', 'ui-test', 'resources', 'test'), async () => {
+				await VSBrowser.instance.driver.sleep(3_000); // give vscode workbench some more time to load properly
+				// this can be used for some dymamic waiting such for example wait until editor with given title is opened and so on
+			});
 		// make sure the view is open
 		(await new ActivityBar().getViewControl('Explorer'))?.openView();
 

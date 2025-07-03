@@ -18,11 +18,13 @@
 import { expect } from 'chai';
 import { ActivityBar, ContextMenu, EditorView, TitleBar } from 'vscode-extension-tester';
 
+// NOTE: This will be working only for testing with VS Code 1.101+
+
 // there are 2 types of menus in vscode: title bar and context menus
 // a lot of page objects can open context menus using the 'openContextMenu' method
 // the title bar items also open context menus, all context menus were created equal
 // neither menu will work on mac, since they are native there
-(process.platform === 'darwin' ? describe.skip : describe)('Example menu manipulation test', () => {
+describe('Example menu manipulation test', () => {
 	let titleBar: TitleBar;
 
 	before(() => {
@@ -34,7 +36,7 @@ import { ActivityBar, ContextMenu, EditorView, TitleBar } from 'vscode-extension
 		await new EditorView().closeAllEditors();
 	});
 
-	describe('Title Bar', () => {
+	(process.platform === 'darwin' ? describe.skip : describe)('Title Bar', () => {
 		// the most useful method of titlebar is 'select'
 		// which selects an entire path of (possibly) nested menu items
 		it('Select a top level item', async () => {
