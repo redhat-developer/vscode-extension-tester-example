@@ -22,7 +22,7 @@ jobs:
       TEST_RESOURCES: test-resources
     steps:
       - name: Checkout Repository
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
 
       - name: Setup NodeJS 20
         uses: actions/setup-node@v6
