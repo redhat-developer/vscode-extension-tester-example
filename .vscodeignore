@@ -10,3 +10,4 @@ resources/**
 .vscode/
 settings.json
 out/ui-test/
+reports/
