@@ -50,7 +50,7 @@
     "@types/vscode": "^1.101.0",
     "@typescript-eslint/eslint-plugin": "^8.56.0",
     "chai": "^6.2.2",
-    "eslint": "^10.0.0",
+    "eslint": "^10.0.1",
     "eslint-define-config": "^2.1.0",
     "mocha": "^11.7.5",
     "typescript": "^5.9.3",
