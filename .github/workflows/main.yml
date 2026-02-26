@@ -57,14 +57,14 @@ jobs:
           reporter: mocha-json
 
       - name: Store UI test logs
-        uses: actions/upload-artifact@v6
+        uses: actions/upload-artifact@v7
         if: failure() || cancelled()
         with:
           name: logs-${{ matrix.os }}
           path: test-resources/settings/logs/*
 
       - name: Store UI Test screenshots
-        uses: actions/upload-artifact@v6
+        uses: actions/upload-artifact@v7
         if: failure() || cancelled()
         with:
           name: screenshots-${{ matrix.os }}
