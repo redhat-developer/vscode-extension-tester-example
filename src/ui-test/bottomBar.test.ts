@@ -15,17 +15,19 @@
  * limitations under the License.
  */
 
-import { BottomBarPanel, EditorView, MarkerType, OutputView, ProblemsView, TerminalView, VSBrowser } from 'vscode-extension-tester';
+import { BottomBarPanel, EditorView, MarkerType, OutputView, ProblemsView, TerminalView, VSBrowser, WaitHelper } from 'vscode-extension-tester';
 import * as path from 'path';
 import { expect } from 'chai';
 
 // Sample tests using the Bottom Bar, the panel that houses the terminal, output, problems, etc.
 describe('Bottom Bar Example Tests', function () {
 	let bottomBar: BottomBarPanel;
+	let waitHelper: WaitHelper;
 
 	before(async function () {
 		// init the bottom bar page object
 		bottomBar = new BottomBarPanel();
+		waitHelper = new WaitHelper(VSBrowser.instance.driver);
 
 		// make sure the panel is open
 		await bottomBar.toggle(true);
@@ -92,16 +94,28 @@ describe('Bottom Bar Example Tests', function () {
 
 		// there is also a file marker (out problematic file that contains the errors)
 		it('There is a file marker', async function () {
-			const files = await view.getAllVisibleMarkers(MarkerType.File);
-			const file = files[0];
+			// Marker elements go stale when the Problems view re-renders.
+			// Re-fetch the file marker inside withRetry() so each attempt uses a fresh ref.
+			// On macOS, getText() can return null (missing aria-label attribute) when the
+			// element is stale, causing a TypeError inside getType() — include TypeError
+			// in the retryable set so those attempts are also retried cleanly.
+			await waitHelper.withRetry(async () => {
+				const files = await view.getAllVisibleMarkers(MarkerType.File);
+				const file = files[0];
 
-			// we can get the text of the marker
-			expect(await file.getText()).contains('problems.ts');
-			// and the type
-			expect(await file.getType()).equals(MarkerType.File);
-			// and we can collapse & expand the file marker
-			await file.toggleExpand(false);
-			await file.toggleExpand(true);
+				// we can get the text of the marker
+				expect(await file.getText()).contains('problems.ts');
+				// and the type
+				expect(await file.getType()).equals(MarkerType.File);
+				// and we can collapse & expand the file marker
+				await file.toggleExpand(false);
+				await file.toggleExpand(true);
+			}, {
+				isRetryable: (e) =>
+					e.name === 'StaleElementReferenceError' ||
+					e.name === 'ElementNotInteractableError' ||
+					e instanceof TypeError,
+			});
 		});
 
 		it('Markers are displayed', async function () {

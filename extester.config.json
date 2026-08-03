@@ -1,0 +1,13 @@
+{
+  "$schema": "./node_modules/vscode-extension-tester/resources/extester.schema.json",
+  "setup": {
+    "vscodeVersion": "max",
+    "extensionsDir": ".test-extensions"
+  },
+  "run": {
+    "testFiles": ["./out/ui-test/*.test.js"],
+    "settings": "./settings.json",
+    "extensionsDir": ".test-extensions",
+    "mochaConfig": "./.mocharc.js"
+  }
+}

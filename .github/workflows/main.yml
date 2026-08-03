@@ -18,8 +18,6 @@ jobs:
       matrix:
         os: [ubuntu-latest, macos-latest, windows-latest]
       fail-fast: false
-    env:
-      TEST_RESOURCES: test-resources
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v7
@@ -36,23 +34,26 @@ jobs:
       - name: npm-compile
         run: npm run compile
 
+      - name: Create reports directory
+        run: mkdir -p reports
+
       - name: Allow unprivileged user namespace (ubuntu)
         if: ${{ startsWith(matrix.os, 'ubuntu') }}
         run: sudo sysctl -w kernel.apparmor_restrict_unprivileged_userns=0
 
       - name: UI test (macOS, windows)
         if: matrix.os != 'ubuntu-latest'
-        run: npm run ui-test
+        run: npm run ui-test -- --mocha_config ./.mocharc-actions.js
 
       - name: UI test (linux)
         if: matrix.os == 'ubuntu-latest'
-        run: xvfb-run --auto-servernum --server-args='-screen 0 1920x1080x24' npm run ui-test
+        run: xvfb-run --auto-servernum --server-args='-screen 0 1920x1080x24' npm run ui-test -- --mocha_config ./.mocharc-actions.js
 
       - name: Test Report
         uses: dorny/test-reporter@v3.0.0
         if: ${{ !cancelled() }}
         with:
-          name: UI Tests
+          name: UI Tests (${{ matrix.os }})
           path: reports/ui-test-results.json
           reporter: mocha-json
 
@@ -61,14 +62,14 @@ jobs:
         if: failure() || cancelled()
         with:
           name: logs-${{ matrix.os }}
-          path: test-resources/settings/logs/*
+          path: ${{ runner.temp }}/test-resources/settings/logs/*
 
       - name: Store UI Test screenshots
         uses: actions/upload-artifact@v7
         if: failure() || cancelled()
         with:
           name: screenshots-${{ matrix.os }}
-          path: test-resources/screenshots/*.png
+          path: ${{ runner.temp }}/test-resources/screenshots/*.png
 
   check:
     if: always()
