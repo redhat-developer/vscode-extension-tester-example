@@ -24,11 +24,23 @@ describe('Sample notifications tests', () => {
 		// this command is going to display a notification
 		await new Workbench().executeCommand('hello world');
 
-		// Wait for a notification to appear with a timeout of 2 seconds
-		// The result is cast to Notification because our wait condition may return undefined
+		// Wait for a notification to appear — 5 s matches the Mocha test timeout so
+		// a slow VS Code render does not cause a spurious timeout before the test body runs.
 		(await VSBrowser.instance.driver.wait(() => {
 			return notificationExists('Hello');
-		}, 2000)) as Notification;
+		}, 5000)) as Notification;
+	});
+
+	afterEach(async () => {
+		// Dismiss any leftover notifications so they don't bleed into the next test.
+		try {
+			const notifications = await new Workbench().getNotifications();
+			for (const notification of notifications) {
+				await notification.dismiss();
+			}
+		} catch {
+			// ignore — no notifications present or already dismissed
+		}
 	});
 
 	// The first type of notifications is the standalone one
