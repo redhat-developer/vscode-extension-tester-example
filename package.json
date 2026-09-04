@@ -52,7 +52,7 @@
     "chai": "^6.2.2",
     "eslint": "^10.9.1",
     "eslint-define-config": "^2.1.0",
-    "mocha": "^11.8.0",
+    "mocha": "^12.0.0",
     "typescript": "^5.9.3",
     "vscode-extension-tester": "^8.25.0"
   }
