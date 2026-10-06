@@ -50,7 +50,7 @@ jobs:
         run: xvfb-run --auto-servernum --server-args='-screen 0 1920x1080x24' npm run ui-test -- --mocha_config ./.mocharc-actions.js
 
       - name: Test Report
-        uses: dorny/test-reporter@v3.0.0
+        uses: dorny/test-reporter@v3.2.0
         if: ${{ !cancelled() }}
         with:
           name: UI Tests (${{ matrix.os }})
