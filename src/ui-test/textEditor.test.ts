@@ -67,9 +67,14 @@ describe('Text Editor sample tests', () => {
 		expect(await editor.isDirty()).is.true;
 
 		// another way to set test case timeout, this one also works with arrow functions
-	}).timeout(15000);
+		// (getText() and its derivatives drive the command palette, which is slow on CI runners)
+	}).timeout(30000);
 
 	it('Content Assist', async () => {
+		// content assist filters suggestions by the word before the cursor, so move
+		// the cursor to a position with an empty prefix to get all words as suggestions
+		await editor.setCursor(1, 1);
+
 		// we have content assist at our disposal, open it
 		const assist = await editor.toggleContentAssist(true);
 		// toggle can return void, so we need to make sure the object is present
