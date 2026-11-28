@@ -156,14 +156,12 @@ The Runner reads its project settings from the `runner` section of [`extester.co
 |---|---|
 | Run all tests, a folder or a file | Click ▶️ next to it in the **Testing** view |
 | Run a single `describe` or `it` | Click ▶️ next to it in the **Testing** view or in the editor gutter |
-| Debug a test | **Debug Test** in the **Testing** view or the gutter menu; breakpoints in the `.ts` tests stop, and Mocha's timeouts are turned off |
+| Debug all tests, a folder, a file or a single test | **Debug Test** in the **Testing** view or the gutter menu; breakpoints in the `.ts` tests stop, and Mocha's timeouts are turned off |
 | Re-run the last run | **Test: Rerun Last Run** from the Command Palette |
 
 Each test shows whether it passed, failed or was skipped. A failure shows the error, a diff of expected and actual values, a stack trace into the test code and a thumbnail of the failure screenshot. Tests marked with `.only` or `.skip` are labelled in the tree.
 
 The **Screenshots** and **Logs** views below the tests keep the files of each run, newest first.
-
-The [`Debug UI Tests`](./.vscode/launch.json) launch configuration remains available for debugging the whole suite from the **Run and Debug** view.
 
 ### Keeping the test window off your screen
 
