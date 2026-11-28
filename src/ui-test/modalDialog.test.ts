@@ -16,10 +16,14 @@
  */
 
 import { expect } from 'chai';
-import { EditorView, InputBox, ModalDialog, TextEditor, Workbench } from 'vscode-extension-tester';
+import { EditorView, InputBox, ModalDialog, TextEditor, VSBrowser, Workbench } from 'vscode-extension-tester';
+
+// a hidden window (`npm run ui-test:hidden`) runs VS Code in extension test mode, which never shows dialogs:
+// it answers "Save changes?" with "Don't Save" on its own. isHiddenWindow is already set when test files load
+const dialogsShown = !VSBrowser.instance.isHiddenWindow;
 
 // Example of handling a modal dialog
-describe('Sample Modal Dialog Tests', () => {
+(dialogsShown ? describe : describe.skip)('Sample Modal Dialog Tests', () => {
 	let dialog: ModalDialog;
 
 	before(async () => {

@@ -5,6 +5,10 @@
 {
   "version": "0.2.0",
   "configurations": [
+    // Debugs the whole suite. To debug a single test or suite, use "Debug Test" in the Testing view
+    // or the editor gutter instead (ExTester Runner).
+    // Test files, settings and the extensions dir come from extester.config.json; the TypeScript
+    // sources are loaded through tsx, so breakpoints in src/ui-test/*.test.ts bind without a compile step.
     {
       "name": "Debug UI Tests",
       "type": "node",
@@ -15,11 +19,6 @@
       },
       "args": [
         "setup-and-run",
-        "${workspaceFolder}/out/ui-test/*.test.js",
-        "--code_settings",
-        "settings.json",
-        "--extensions_dir",
-        ".test-extensions",
         "--mocha_config",
         "${workspaceFolder}/src/ui-test/.mocharc-debug.js"
       ],

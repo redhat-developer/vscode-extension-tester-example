@@ -5,3 +5,4 @@ node_modules
 test-resources/
 .test-extensions
 reports/
+.vscode/settings.json
