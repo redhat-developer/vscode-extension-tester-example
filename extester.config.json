@@ -5,9 +5,14 @@
     "extensionsDir": ".test-extensions"
   },
   "run": {
-    "testFiles": ["./out/ui-test/*.test.js"],
+    "testFiles": ["./src/ui-test/*.test.ts"],
     "settings": "./settings.json",
     "extensionsDir": ".test-extensions",
     "mochaConfig": "./.mocharc.js"
+  },
+  "runner": {
+    "testFileGlob": "src/ui-test/**/*.test.ts",
+    "ignorePathPart": "src/",
+    "runSources": true
   }
 }
