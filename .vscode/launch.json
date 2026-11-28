@@ -5,26 +5,6 @@
 {
   "version": "0.2.0",
   "configurations": [
-    // Debugs the whole suite. To debug a single test or suite, use "Debug Test" in the Testing view
-    // or the editor gutter instead (ExTester Runner).
-    // Test files, settings and the extensions dir come from extester.config.json; the TypeScript
-    // sources are loaded through tsx, so breakpoints in src/ui-test/*.test.ts bind without a compile step.
-    {
-      "name": "Debug UI Tests",
-      "type": "node",
-      "request": "launch",
-      "program": "${workspaceFolder}/node_modules/.bin/extest",
-      "windows": {
-        "program": "${workspaceFolder}/node_modules/vscode-extension-tester/out/cli.js",
-      },
-      "args": [
-        "setup-and-run",
-        "--mocha_config",
-        "${workspaceFolder}/src/ui-test/.mocharc-debug.js"
-      ],
-      "console": "integratedTerminal",
-      "internalConsoleOptions": "neverOpen"
-    },
     {
       "name": "Run Extension",
       "type": "extensionHost",
