@@ -31,11 +31,17 @@ jobs:
       - name: npm-ci
         run: npm ci
 
+      # tsx loads the TypeScript tests without type checking them, so type check and lint here
       - name: npm-compile
         run: npm run compile
 
       - name: Create reports directory
         run: mkdir -p reports
+
+      # keep VS Code, logs and screenshots in a known place, so the steps below can upload them
+      - name: Set TEST_RESOURCES path
+        run: echo "TEST_RESOURCES=${{ runner.temp }}/test-resources" >> "$GITHUB_ENV"
+        shell: bash
 
       - name: Allow unprivileged user namespace (ubuntu)
         if: ${{ startsWith(matrix.os, 'ubuntu') }}
@@ -57,19 +63,24 @@ jobs:
           path: reports/ui-test-results.json
           reporter: mocha-json
 
+      # chromedriver.log and crashes/ hold what VS Code printed and dumped when it fails to launch
       - name: Store UI test logs
         uses: actions/upload-artifact@v7
         if: failure() || cancelled()
         with:
           name: logs-${{ matrix.os }}
-          path: ${{ runner.temp }}/test-resources/settings/logs/*
+          path: |
+            ${{ runner.temp }}/test-resources/settings/logs/**
+            ${{ runner.temp }}/test-resources/chromedriver.log
+            ${{ runner.temp }}/test-resources/crashes/**
 
+      # ExTester saves screenshots of failed tests and failed hooks in a folder per run: screenshots/<run-timestamp>/
       - name: Store UI Test screenshots
         uses: actions/upload-artifact@v7
         if: failure() || cancelled()
         with:
           name: screenshots-${{ matrix.os }}
-          path: ${{ runner.temp }}/test-resources/screenshots/*.png
+          path: ${{ runner.temp }}/test-resources/screenshots/**/*.png
 
   check:
     if: always()
